@@ -88,7 +88,7 @@ pub struct Assignee {
 #[derive(Serialize, Deserialize)]
 pub struct Label {
     id: i64,
-    name: String,
+    pub name: String,
     description: Option<String>,
 }
 
@@ -104,7 +104,7 @@ pub struct Issue {
     pull_request: Option<Pull>,
     created_at: DateTime<Utc>,
     author_association: String,
-    labels: Vec<Label>,
+    pub labels: Vec<Label>,
 }
 
 impl fmt::Display for Issue {

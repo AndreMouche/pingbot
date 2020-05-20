@@ -1,6 +1,7 @@
 # slack
 # OAuth access token, user token scopes are required.
-slack-token = "slack-token"
+tidb-slack-token = "slack-token"
+tikv-slack-token = "xxx"
 slack-channel = "slack-channel"
 
 # github
@@ -20,3 +21,13 @@ discourse-categories = ["TiDB 用户问答", "TiDB 开发者"]
 discourse-members = [
   "you06"
 ]
+
+[[sigs]]
+name="transaction"
+labels=["component/coprocessor","label2"]
+slack-channel="xxx"
+
+[[sigs]]
+name="ddl"
+labels=["component/parser","lable2"]
+slack-channel='xxxxaaa'
