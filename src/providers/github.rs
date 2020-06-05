@@ -100,7 +100,7 @@ pub struct Issue {
     #[serde(skip_deserializing)]
     owner: String,
     #[serde(skip_deserializing)]
-    repo: String,
+    pub repo: String,
     pull_request: Option<Pull>,
     created_at: DateTime<Utc>,
     author_association: String,

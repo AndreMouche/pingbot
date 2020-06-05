@@ -33,8 +33,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     if let Some(ping) = opts.ping {
         let _ = tidb_client
-            .send_message(conf.slack_channel.clone(), ping)
+            .send_message(conf.slack_channel.clone(), ping.clone())
             .await?;
+        // for sig in conf.sigs{
+        //     println!("Current channel: {}", sig.slack_channel);
+        //      if sig.slack_workspace_in_tikv {
+        //          tikv_client.send_message(sig.slack_channel.clone(), ping.clone()).await?;
+        //      }else {
+        //         tidb_client.send_message(sig.slack_channel.clone(), ping.clone()).await?;
+        //      }
+        // }
         return Ok(());
     }
 
@@ -59,10 +67,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut oncall = "".to_owned();
     let mut un_dispatch_issues = issues.len();
     for issue in issues {
+        println!("issues.repo {}",issue.repo);
         let mut find=false;
+        // check whether this repo has a full owner
+        if let Some(id)=labels_sig.get(&issue.repo) {
+             sig_list[*id].report.push_str(&format!("{}\n", issue)[..]);
+             sig_list[*id].number += 1;
+             un_dispatch_issues -= 1;
+             continue;
+        }
         for label in &issue.labels {
-            let lower_label = label.name.to_lowercase();
-                if let Some(id)= labels_sig.get(&lower_label) {
+            let lower_label = format!("{}:{}",issue.repo,label.name.to_lowercase());
+            println!("lower_label:{}",lower_label);
+            if let Some(id)= labels_sig.get(&lower_label) {
                     sig_list[*id].report.push_str(&format!("{}\n", issue)[..]);
                     sig_list[*id].number += 1;
                     find=true;

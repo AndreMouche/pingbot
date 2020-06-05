@@ -8,8 +8,9 @@ slack-channel = "slack-channel"
 github-token = "github-token"
 repos = ["you06/pingbot"]
 filter-labels = [
-  "filter-label-1",
-  "filter-label-2"
+  "repo:filter-label-1",
+  "repo:filter-label-2",
+  "repo3"
 ]
 
 # discourse
@@ -24,10 +25,10 @@ discourse-members = [
 
 [[sigs]]
 name="transaction"
-labels=["component/coprocessor","label2"]
+labels=["repo:component/coprocessor","rep3"]
 slack-channel="xxx"
 
 [[sigs]]
 name="ddl"
-labels=["component/parser","lable2"]
+labels=["repo:component/parser","repo4"]
 slack-channel='xxxxaaa'
