@@ -82,13 +82,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             if let Some(id)= labels_sig.get(&lower_label) {
                     sig_list[*id].report.push_str(&format!("{}\n", issue)[..]);
                     sig_list[*id].number += 1;
+                    un_dispatch_issues -= 1;
                     find=true;
                     break;
                 }
         }
         if !find {
             oncall.push_str(&format!("{}\n", issue)[..]);
-            un_dispatch_issues -= 1;
         }
     }
 
@@ -96,7 +96,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         if sig.number == 0 {
             continue;
         }
-        let mut report=format!("{} no-reply issues in 3 days\n", sig.number);
+        let mut report=format!("{} untraced issues(no reply,no label shows its status) in 3 days in the {} sig\n", sig.number,sig.sig.name);
         report.push_str(&sig.report);
         println!("---------{}-----",sig.sig.name);
         println!("{}",report);
@@ -108,7 +108,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("---total-oncall---");
     println!("{}",oncall);
-    let mut report = format!("{} no-reply issues in 3 days\n", un_dispatch_issues);
+    let mut report = format!("{} no-reply issues(no reply,no label shows its status or sig info) in 3 days\n", un_dispatch_issues);
     report.push_str(&oncall);
     let discourse_client = Discourse::new(
         conf.discourse_base_url.to_owned(),
