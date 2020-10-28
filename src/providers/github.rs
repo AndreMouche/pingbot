@@ -170,9 +170,9 @@ impl GitHub {
         let opened_issues: Vec<Issue> = opened_all
             .into_iter()
             .filter(|issue| {
-                if now.signed_duration_since(issue.created_at).num_hours() > 3 * 24 {
-                    return false;
-                }
+                // if now.signed_duration_since(issue.created_at).num_hours() > 3 * 24 {
+                //     return false;
+                // }
                 if self.if_filter_by_label(&issue) {
                     return false;
                 }

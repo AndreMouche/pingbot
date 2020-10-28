@@ -96,7 +96,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         if sig.number == 0 {
             continue;
         }
-        let mut report=format!("{} no-reply issues in 3 days\n", sig.number);
+        let mut report=format!("{} no-reply issues \n", sig.number);
         report.push_str(&sig.report);
         println!("---------{}-----",sig.sig.name);
         println!("{}",report);
@@ -108,23 +108,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("---total-oncall---");
     println!("{}",oncall);
-    let mut report = format!("{} no-reply issues in 3 days\n", un_dispatch_issues);
+    let mut report = format!("{} no-reply issues \n", un_dispatch_issues);
     report.push_str(&oncall);
-    let discourse_client = Discourse::new(
-        conf.discourse_base_url.to_owned(),
-        conf.discourse_members.clone(),
-    );
-    let topics = discourse_client
-        .find_no_reply_topics_by_categories(conf.discourse_categories.clone())
-        .await?;
+    // let discourse_client = Discourse::new(
+    //     conf.discourse_base_url.to_owned(),
+    //     conf.discourse_members.clone(),
+    // );
+    // let topics = discourse_client
+    //     .find_no_reply_topics_by_categories(conf.discourse_categories.clone())
+    //     .await?;
 
-    if topics.len() != 0 {
-        has_topic = true;
-        report.push_str(&format!("\n\n{} no-reply topics in TUG\n", topics.len())[..]);
-        for topic in topics {
-          report.push_str(&format!("{}\n", topic)[..]);
-        }
-    }
+    // if topics.len() != 0 {
+    //     has_topic = true;
+    //     report.push_str(&format!("\n\n{} no-reply topics in TUG\n", topics.len())[..]);
+    //     for topic in topics {
+    //       report.push_str(&format!("{}\n", topic)[..]);
+    //     }
+    // }
 
     if conf.tidb_slack_token != "" && conf.slack_channel != "" {
         if un_dispatch_issues>0 || has_topic {
